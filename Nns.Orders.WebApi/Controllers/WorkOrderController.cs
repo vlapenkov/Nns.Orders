@@ -11,7 +11,7 @@ namespace Nns.Orders.WebApi.Controllers
     public class WorkOrderController : ControllerBase
     {
 
-        IWorkOrderService _workOrderService;
+        private readonly IWorkOrderService _workOrderService;
 
         public WorkOrderController(IWorkOrderService workOrderService)
         {
@@ -36,7 +36,7 @@ namespace Nns.Orders.WebApi.Controllers
         {
             var result = await _workOrderService.Add(request);
 
-            return CreatedAtAction(nameof(Get), result);
+            return CreatedAtAction(nameof(Get), new { Id = result }, request);
         }
 
       

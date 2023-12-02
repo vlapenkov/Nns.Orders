@@ -11,6 +11,5 @@
 </ul>
 <ul>TODO:
 <li>Automapper</li>
-<li>FluentValidation</li>
-<li>Middleware</li>
+<li>Error Middleware</li>
 </ul>

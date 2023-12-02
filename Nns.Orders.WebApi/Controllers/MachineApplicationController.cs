@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Nns.Orders.Domain.Documents;
 using Nns.Orders.Interfaces;
+using Nns.Orders.Interfaces.Logic;
 using Nns.Orders.Interfaces.Models;
 using Nns.Orders.Logic;
 
@@ -13,9 +14,9 @@ namespace Nns.Orders.WebApi.Controllers
     [ApiController]
     public class MachineApplicationController : ControllerBase
     {
-        MachineApplicationService _service;
+        private IMachineApplicationService _service;
 
-        public MachineApplicationController(MachineApplicationService service)
+        public MachineApplicationController(IMachineApplicationService service)
         {
             _service = service;
         }
@@ -24,8 +25,8 @@ namespace Nns.Orders.WebApi.Controllers
         /// <summary>
         /// Получение применяемости по выработке
         /// </summary>
-        [HttpGet("{id}")]
-        public async Task<MachineApplicationResponse> Get(int id)
+        [HttpGet("{id:long}")]
+        public async Task<MachineApplicationResponse> Get(long id)
         {
             return await _service.Get(id);
         }
@@ -34,11 +35,13 @@ namespace Nns.Orders.WebApi.Controllers
         /// Создание применяемости по выработке
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] CreateMachineApplicationRequest request)
+        public async Task<ActionResult> Post([FromBody] CreateMachineApplicationRequest request)
         {
           var result =await _service.Add(request);
 
-            return CreatedAtAction(nameof(Get),result);
+            return CreatedAtAction(nameof(Get),new {Id = result }, request);
+            
+            
         }
        
 

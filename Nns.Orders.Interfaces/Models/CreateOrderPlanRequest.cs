@@ -22,5 +22,6 @@ namespace Nns.Orders.Interfaces.Models
         public uint OrderNumber { get; set; }
 
         public bool IsComplete { get; set; }
+        
     }
 }

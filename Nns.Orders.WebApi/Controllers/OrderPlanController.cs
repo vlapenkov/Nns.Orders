@@ -44,7 +44,7 @@ namespace Nns.Orders.WebApi.Controllers
         {
             var result = await _service.Add(request);
 
-            return CreatedAtAction(nameof(Get), result);
+            return CreatedAtAction(nameof(Get), new { Id = result }, request);
         }
        
 
