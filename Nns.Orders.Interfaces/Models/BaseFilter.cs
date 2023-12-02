@@ -12,11 +12,11 @@ namespace IBS.Employees.Dto
         /// <summary>
         /// Номер страницы
         /// </summary>
-        public int? PageNumber { get; set; } =1;
+        public int? PageNumber { get; set; }
 
         /// <summary>
         /// Количество элементов на странице
         /// </summary>
-        public int? PageSize { get; set; } = 30;
+        public int? PageSize { get; set; }
     }
 }

@@ -3,20 +3,25 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.4.33403.182
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nns.Orders.WebApi", "Nns.Orders.WebApi\Nns.Orders.WebApi.csproj", "{D5FB904A-99CA-4A14-A8FB-8A51DE73A6C2}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nns.Orders.WebApi", "Nns.Orders.WebApi\Nns.Orders.WebApi.csproj", "{D5FB904A-99CA-4A14-A8FB-8A51DE73A6C2}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nns.Orders.Infrastructure", "Nns.Orders.Infrastructure\Nns.Orders.Infrastructure.csproj", "{8376C9FE-E94A-4E00-BA15-47ED5437B0A3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nns.Orders.Infrastructure", "Nns.Orders.Infrastructure\Nns.Orders.Infrastructure.csproj", "{8376C9FE-E94A-4E00-BA15-47ED5437B0A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nns.Orders.Logic", "Nns.Orders.Logic\Nns.Orders.Logic.csproj", "{5368E829-78CE-410E-B126-8CABCFD59517}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nns.Orders.Logic", "Nns.Orders.Logic\Nns.Orders.Logic.csproj", "{5368E829-78CE-410E-B126-8CABCFD59517}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nns.Orders.Interfaces", "Nns.Orders.Interfaces\Nns.Orders.Interfaces.csproj", "{60C9C48C-5788-437C-B759-6DDB5164DF63}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nns.Orders.Interfaces", "Nns.Orders.Interfaces\Nns.Orders.Interfaces.csproj", "{60C9C48C-5788-437C-B759-6DDB5164DF63}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nns.Orders.Domain", "Nns.Orders.Domain\Nns.Orders.Domain.csproj", "{3A1A98F4-7028-4B4B-B3D5-C4EDCD6B540D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nns.Orders.Domain", "Nns.Orders.Domain\Nns.Orders.Domain.csproj", "{3A1A98F4-7028-4B4B-B3D5-C4EDCD6B540D}"
 	ProjectSection(ProjectDependencies) = postProject
 		{D2AC1324-93C8-4990-B740-39834B7AF276} = {D2AC1324-93C8-4990-B740-39834B7AF276}
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Nns.Orders.Common", "Nns.Orders.Common\Nns.Orders.Common.csproj", "{D2AC1324-93C8-4990-B740-39834B7AF276}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Nns.Orders.Common", "Nns.Orders.Common\Nns.Orders.Common.csproj", "{D2AC1324-93C8-4990-B740-39834B7AF276}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Элементы решения", "Элементы решения", "{8C8665EC-4A02-48A2-91A3-84177402C097}"
+	ProjectSection(SolutionItems) = preProject
+		Readme.md = Readme.md
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
