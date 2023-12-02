@@ -73,13 +73,6 @@ namespace Nns.Orders.Logic
 
         }
 
-        public async Task<bool> CanApply( long settlementId, long workKindId, long machineKindId) {
-
-          var lastRecord =  await _dbContext.MachineApplications.Where(p => p.SettlementId == settlementId && p.WorkKindId == workKindId && p.MachineKindId == machineKindId)
-                .OrderByDescending(p => p.StartDate).FirstOrDefaultAsync();
-
-            return lastRecord != null && lastRecord.IsActive;
-
-        }
+      
     }
 }

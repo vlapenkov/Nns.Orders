@@ -6,7 +6,6 @@ namespace Nns.Orders.Interfaces.Logic
     {
         Task<long> Add(CreateMachineApplicationRequest request);
         Task<MachineApplicationResponse> Get(long id);
-
-        Task<bool> CanApply(long settlementId, long workKindId, long machineKindId);
+                
     }
 }

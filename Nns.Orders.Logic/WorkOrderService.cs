@@ -21,7 +21,7 @@ namespace Nns.Orders.Logic
                 throw new AppException("Нельзя вводить данные задним числом. Уже есть более поздние записи.");
 
 
-            bool hasApplication = await _dbContext.WorkOrders.AnyAsync(p =>
+            bool hasApplication = await _dbContext.WorkOrders.AsNoTracking().AnyAsync(p =>
               p.StartDate == request.StartDate
               && p.SettlementId == request.SettlementId
               && p.WorkKindId == request.WorkKindId
@@ -33,7 +33,7 @@ namespace Nns.Orders.Logic
             }
 
 
-            List<WorkOrder> records = await _dbContext.WorkOrders.Where(p => p.SettlementId == request.SettlementId).ToListAsync();
+            List<WorkOrder> records = await _dbContext.WorkOrders.AsNoTracking().Where(p => p.SettlementId == request.SettlementId).ToListAsync();
 
             WorkOrder[] activeRecords = records.GroupBy(x => x.WorkKindId, (key, g) => g.OrderByDescending(e => e.StartDate).First())
                 .Where(p => p.IsActive).ToArray();

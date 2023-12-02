@@ -1,4 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Nns.Orders.Interfaces.Logic;
+using Nns.Orders.Interfaces.Models;
+using Nns.Orders.Logic;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -8,6 +11,13 @@ namespace Nns.Orders.WebApi.Controllers
     [ApiController]
     public class OrderPlanController : ControllerBase
     {
+        private readonly IOrderPlanService _service;
+
+        public OrderPlanController(IOrderPlanService service)
+        {
+            _service = service;
+        }
+
         // GET: api/<OrderPlanController>
         [HttpGet]
         public IEnumerable<string> Get()
@@ -17,15 +27,18 @@ namespace Nns.Orders.WebApi.Controllers
 
         // GET api/<OrderPlanController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<OrderPlanResponse> Get(int id)
         {
-            return "value";
+            return await _service.Get(id);
         }
 
         // POST api/<OrderPlanController>
         [HttpPost]
-        public void Post([FromBody] string value)
+        public async Task<IActionResult> Post([FromBody] CreateOrderPlanRequest request)
         {
+            var result = await _service.Add(request);
+
+            return CreatedAtAction(nameof(Get), result);
         }
 
         // PUT api/<OrderPlanController>/5

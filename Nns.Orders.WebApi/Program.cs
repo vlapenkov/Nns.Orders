@@ -19,6 +19,8 @@ builder.Services.AddDbContext<IOrderDbContext, OrderDbContext>(
 
 builder.Services.AddScoped<IMachineApplicationService, MachineApplicationService>();
 builder.Services.AddScoped<IWorkOrderService,WorkOrderService>();
+builder.Services.AddScoped<IOrderPlanService, OrderPlanService>();
+
 
 
 // Add services to the container.
