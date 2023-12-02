@@ -18,21 +18,27 @@ namespace Nns.Orders.WebApi.Controllers
             _service = service;
         }
 
-        // GET: api/<OrderPlanController>
+        /// <summary>
+        /// Список планов (наряд-заданий)
+        /// </summary>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public async Task<PagedList<OrderPlanResponse>> Get([FromQuery]OrderPlanFilter filter)
         {
-            return new string[] { "value1", "value2" };
+            return await _service.Get(filter);
         }
 
-        // GET api/<OrderPlanController>/5
+        /// <summary>
+        /// Получение плана (наряд-задания)
+        /// </summary>
         [HttpGet("{id}")]
         public async Task<OrderPlanResponse> Get(int id)
         {
             return await _service.Get(id);
         }
 
-        // POST api/<OrderPlanController>
+        /// <summary>
+        /// Создание плана (наряд-задания)
+        /// </summary>  
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateOrderPlanRequest request)
         {
@@ -40,17 +46,8 @@ namespace Nns.Orders.WebApi.Controllers
 
             return CreatedAtAction(nameof(Get), result);
         }
+       
 
-        // PUT api/<OrderPlanController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<OrderPlanController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+      
     }
 }

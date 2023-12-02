@@ -112,5 +112,65 @@ namespace Nns.Orders.Logic
                 Value = result.Value
             };
         }
+
+        public async Task<PagedList<OrderPlanResponse>> Get(OrderPlanFilter filter)
+        {
+            IQueryable<OrderPlan> query = _dbContext.OrderPlan.AsNoTracking();
+
+            if (filter.SettlementId != null)
+            {
+                query = query.Where(x => x.SettlementId== filter.SettlementId);
+            }
+
+            if (filter.WorkKindId != null)
+            {
+                query = query.Where(x => x.WorkKindId == filter.WorkKindId);
+            }
+            
+            long count = await query.CountAsync();
+
+            query = query.AsNoTracking().OrderByDescending(x => x.Created);
+
+            query = SetPagination(query!, filter);
+
+            PagedList<OrderPlanResponse> result = new()
+            {
+                Items = await query.Select(result => new OrderPlanResponse
+                {
+                    Id = result.Id,
+                    IsComplete = result.IsComplete,
+                    MachineKind = new MachineKindDto { Id = result.MachineKindId, Name = result.MachineKind.Name },
+                    WorkKind = new WorkKindDto { Id = result.WorkKindId, Name = result.WorkKind.Name },
+                    Settlement = new SettlementDto { Id = result.SettlementId, Name = result.Settlement.Name },
+                    OrderNumber = result.OrderNumber,
+                    Value = result.Value
+                }).ToListAsync(),
+                PageNumber = filter.PageNumber!.Value,
+                PageSize = filter.PageSize,
+            };
+
+            return result;
+
+        }
+
+        private IQueryable<OrderPlan> SetPagination(IQueryable<OrderPlan> query, OrderPlanFilter filter)
+        {
+            if (!filter.PageSize.HasValue || filter.PageSize == default)
+            {
+                filter.PageSize = 50;
+            }
+            filter.PageNumber = Math.Max(1, filter.PageNumber.GetValueOrDefault());
+
+            int? position = (filter.PageNumber - 1) * filter.PageSize;
+
+            query = filter.PageSize.Value == int.MaxValue ?
+                query
+                .Skip(position ?? 0)
+                : query
+                .Skip(position ?? 0)
+                .Take(filter.PageSize.Value);
+
+            return query;
+        }
     }
 }

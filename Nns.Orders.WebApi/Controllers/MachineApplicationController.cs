@@ -20,21 +20,19 @@ namespace Nns.Orders.WebApi.Controllers
             _service = service;
         }
 
-        // GET: api/<MachineApplicationController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/<MachineApplicationController>/5
+       
+        /// <summary>
+        /// Получение применяемости по выработке
+        /// </summary>
         [HttpGet("{id}")]
         public async Task<MachineApplicationResponse> Get(int id)
         {
             return await _service.Get(id);
         }
 
-        // POST api/<MachineApplicationController>
+        /// <summary>
+        /// Создание применяемости по выработке
+        /// </summary>
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateMachineApplicationRequest request)
         {
@@ -42,17 +40,8 @@ namespace Nns.Orders.WebApi.Controllers
 
             return CreatedAtAction(nameof(Get),result);
         }
+       
 
-        // PUT api/<MachineApplicationController>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody] string value)
-        {
-        }
-
-        // DELETE api/<MachineApplicationController>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
+        
     }
 }

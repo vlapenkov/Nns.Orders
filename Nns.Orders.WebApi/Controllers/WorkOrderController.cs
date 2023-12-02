@@ -18,21 +18,19 @@ namespace Nns.Orders.WebApi.Controllers
             _workOrderService = workOrderService;
         }
 
-        // GET: api/<OrderPlanController>
-        [HttpGet]
-        public IEnumerable<string> Get()
-        {
-            return new string[] { "value1", "value2" };
-        }
 
-        // GET api/<OrderPlanController>/5
+        /// <summary>
+        /// Получение этапа производственного цикла
+        /// </summary>        
         [HttpGet("{id}")]
         public async Task<WorkOrderResponse> Get(int id)
         {
             return await _workOrderService.Get(id);
         }
 
-        // POST api/<OrderPlanController>
+        /// <summary>
+        /// Создание этапа производственного цикла
+        /// </summary>        
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateWorkOrderRequest request)
         {

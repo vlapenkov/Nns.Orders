@@ -6,5 +6,7 @@ namespace Nns.Orders.Interfaces.Logic
     {
         Task<long> Add(CreateOrderPlanRequest request);
         Task<OrderPlanResponse> Get(long Id);
+
+        Task<PagedList<OrderPlanResponse>> Get(OrderPlanFilter filter);
     }
 }
