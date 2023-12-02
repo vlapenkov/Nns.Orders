@@ -25,5 +25,7 @@ namespace Nns.Orders.Interfaces
         public DbSet<OrderPlan> OrderPlan { get; set; }
 
         Task<int> SaveChangesAsync();
+
+        
     }
 }

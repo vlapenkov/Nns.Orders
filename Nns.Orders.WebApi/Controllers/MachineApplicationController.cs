@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Azure.Core;
+using Microsoft.AspNetCore.Mvc;
 using Nns.Orders.Domain.Documents;
 using Nns.Orders.Interfaces;
 using Nns.Orders.Interfaces.Models;
@@ -28,9 +29,9 @@ namespace Nns.Orders.WebApi.Controllers
 
         // GET api/<MachineApplicationController>/5
         [HttpGet("{id}")]
-        public string Get(int id)
+        public async Task<MachineApplicationResponse> Get(int id)
         {
-            return "value";
+            return await _service.Get(id);
         }
 
         // POST api/<MachineApplicationController>

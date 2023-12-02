@@ -2,6 +2,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
 using Nns.Orders.Infrastructure;
 using Nns.Orders.Interfaces;
+using Nns.Orders.Interfaces.Logic;
+using Nns.Orders.Logic;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,6 +17,8 @@ builder.Services.AddDbContext<IOrderDbContext, OrderDbContext>(
 
 ) ;
 
+builder.Services.AddScoped<IMachineApplicationService, MachineApplicationService>();
+builder.Services.AddScoped<IWorkOrderService,WorkOrderService>();
 
 
 // Add services to the container.

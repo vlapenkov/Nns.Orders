@@ -17,8 +17,4 @@
     <ProjectReference Include="..\Nns.Orders.Infrastructure\Nns.Orders.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Новая папка\" />
-  </ItemGroup>
-
 </Project>

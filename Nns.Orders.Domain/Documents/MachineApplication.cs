@@ -7,6 +7,9 @@ using Nns.Orders.Domain.Entities;
 
 namespace Nns.Orders.Domain.Documents
 {
+    /// <summary>
+    /// Применяемость видов техники по видам работ в рамках выработки
+    /// </summary>
     public class MachineApplication :BaseEntity
     {
         public DateTime StartDate { get; set; }
