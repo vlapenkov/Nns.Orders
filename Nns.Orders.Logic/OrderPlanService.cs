@@ -19,14 +19,14 @@ namespace Nns.Orders.Logic
         public async Task<long> Add(CreateOrderPlanRequest request)
         {
 
-            if (await _dbContext.OrderPlan.AnyAsync(p => p.SettlementId == p.SettlementId && p.StartDate > request.StartDate))
+            if (await _dbContext.OrderPlan.AnyAsync(p => p.SettlementId == request.SettlementId && p.StartDate > request.StartDate))
             {
                 throw new AppException("Нельзя вводить данные задним числом. Уже есть более поздние записи.");
             }
 
             // проверка что нет таких на StartDate
             var workingPlans = await _dbContext.OrderPlan.Where(p =>
-               p.SettlementId == p.SettlementId
+               p.SettlementId == request.SettlementId
                && p.StartDate == request.StartDate)
                 .Select(p => new { p.WorkKindId, p.OrderNumber }).AsNoTracking().ToListAsync();
 

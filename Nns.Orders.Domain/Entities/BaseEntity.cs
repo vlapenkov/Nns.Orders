@@ -10,10 +10,6 @@ namespace Nns.Orders.Domain.Entities
 {
     public abstract class BaseEntity
     {
-
-       
-        
-
         /// <summary>
         /// Идентификатор сущности
         /// </summary>
@@ -27,10 +23,8 @@ namespace Nns.Orders.Domain.Entities
         public DateTime Created { get; set; }
 
         /// <summary>
-        /// Дата окончания периода актуальности записи
+        /// Дата деактивации
         /// </summary>
         public DateTime? EndDate { get; set; }
-
-
     }
 }

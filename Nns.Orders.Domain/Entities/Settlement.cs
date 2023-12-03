@@ -1,15 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿namespace Nns.Orders.Domain.Entities;
 
-namespace Nns.Orders.Domain.Entities
+/// <summary>
+/// Выработка
+/// </summary>
+public class Settlement : BaseEntity
 {
-    public class Settlement :BaseEntity
-    {
-        
-        public string Name { get; set; }
-    }
+    public string Name { get; set; }
 }

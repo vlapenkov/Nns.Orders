@@ -1,16 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Nns.Orders.Domain.Entities
+﻿namespace Nns.Orders.Domain.Entities;
+/// <summary>
+/// Вид работы
+/// </summary>
+public class WorkKind : BaseEntity
 {
-    public class WorkKind :BaseEntity
-    {
-        
-
-        public string Name { get;  set; }
-    }
+    public string Name { get; set; }
 }

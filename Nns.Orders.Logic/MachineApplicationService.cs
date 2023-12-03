@@ -24,7 +24,7 @@ namespace Nns.Orders.Logic
         public async Task<long> Add(CreateMachineApplicationRequest request)
         {
            
-            if(await _dbContext.MachineApplications.AnyAsync(p =>p.SettlementId==p.SettlementId && p.StartDate.Date > request.StartDate))
+            if(await _dbContext.MachineApplications.AnyAsync(p =>p.SettlementId==request.SettlementId && p.StartDate.Date > request.StartDate))
                 throw  new AppException("Нельзя вводить данные задним числом. Уже есть более поздние записи.");
 
             bool hasApplication = await _dbContext.MachineApplications.AnyAsync(p =>

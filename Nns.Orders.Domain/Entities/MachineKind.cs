@@ -1,11 +1,10 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿namespace Nns.Orders.Domain.Entities;
 
-namespace Nns.Orders.Domain.Entities
+/// <summary>
+/// Вид техники
+/// </summary>
+
+public class MachineKind : BaseEntity
 {
-    public class MachineKind : BaseEntity
-    {
-       
-
-        public string Name { get; set; }
-    }
+    public string Name { get; set; }
 }

@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace Nns.Orders.Domain.Documents
 {
+    /// <summary>
+    /// План работ (наряд-задание)
+    /// </summary>
     public class OrderPlan : BaseEntity
     {
         public DateTime StartDate { get; set; }

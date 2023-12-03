@@ -17,11 +17,11 @@ namespace Nns.Orders.Logic
 
         public async Task<long> Add(CreateWorkOrderRequest request)
         {
-            if (await _dbContext.WorkOrders.AnyAsync(p => p.SettlementId == p.SettlementId && p.StartDate > request.StartDate))
+            if (await _dbContext.WorkOrders.AnyAsync(p => p.SettlementId == request.SettlementId && p.StartDate > request.StartDate))
                 throw new AppException("Нельзя вводить данные задним числом. Уже есть более поздние записи.");
 
 
-            bool hasApplication = await _dbContext.WorkOrders.AsNoTracking().AnyAsync(p =>
+            bool hasApplication = await _dbContext.WorkOrders.AnyAsync(p =>
               p.StartDate == request.StartDate
               && p.SettlementId == request.SettlementId
               && p.WorkKindId == request.WorkKindId
