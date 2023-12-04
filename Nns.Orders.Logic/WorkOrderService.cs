@@ -17,12 +17,12 @@ namespace Nns.Orders.Logic
 
         public async Task<long> Add(CreateWorkOrderRequest request)
         {
-            if (await _dbContext.WorkOrders.AnyAsync(p => p.SettlementId == request.SettlementId && p.StartDate > request.StartDate))
+            if (await _dbContext.WorkOrders.AnyAsync(p => p.SettlementId == request.SettlementId && p.StartDate > request.StartDate.ToDateTime(TimeOnly.MinValue)))
                 throw new AppException("Нельзя вводить данные задним числом. Уже есть более поздние записи.");
 
 
             bool hasApplication = await _dbContext.WorkOrders.AnyAsync(p =>
-              p.StartDate == request.StartDate
+              p.StartDate == request.StartDate.ToDateTime(TimeOnly.MinValue)
               && p.SettlementId == request.SettlementId
               && p.WorkKindId == request.WorkKindId
               );
@@ -39,14 +39,22 @@ namespace Nns.Orders.Logic
                 .Where(p => p.IsActive).ToArray();
 
 
-            if (activeRecords.Any(self => self.WorkKindId == request.WorkKindId && self.OrderNumber == request.OrderNumber))
+            if (request.IsActive)
             {
-                throw new ApplicationException($"Уже есть активная запись на WorkKindId='{request.WorkKindId}' и OrderNumber='{request.OrderNumber}' ");
+                if (activeRecords.Any(self => self.WorkKindId == request.WorkKindId))
+                {
+                    throw new ApplicationException($"Уже есть активная запись на WorkKindId='{request.WorkKindId}'");
+                }
+
+                if (activeRecords.Any(self =>  self.OrderNumber == request.OrderNumber))
+                {
+                    throw new ApplicationException($"Уже есть активная запись на  OrderNumber='{request.OrderNumber}' ");
+                }
             }
 
             var model = new WorkOrder
             {
-                StartDate = request.StartDate,                
+                StartDate = request.StartDate.ToDateTime(TimeOnly.MinValue),                
                 SettlementId = request.SettlementId,
                 WorkKindId = request.WorkKindId,
                 IsActive = request.IsActive
@@ -74,7 +82,7 @@ namespace Nns.Orders.Logic
                 WorkKind = new WorkKindDto { Id = result.WorkKind.Id, Name = result.WorkKind.Name },
                 IsActive = result.IsActive,
                 OrderNumber = result.OrderNumber,
-                StartDate= result.StartDate,    
+                StartDate = result.StartDate    
             };
 
 

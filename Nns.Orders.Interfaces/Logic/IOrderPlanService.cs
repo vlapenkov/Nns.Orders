@@ -1,4 +1,5 @@
-﻿using Nns.Orders.Interfaces.Models;
+﻿using Nns.Orders.Common.PagedList;
+using Nns.Orders.Interfaces.Models;
 
 namespace Nns.Orders.Interfaces.Logic
 {

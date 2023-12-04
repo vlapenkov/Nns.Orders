@@ -9,7 +9,7 @@ namespace Nns.Orders.Interfaces.Models
 {
     public record CreateOrderPlanRequest
     {
-        public DateTime StartDate { get; set; }
+        public DateOnly StartDate { get; set; }
 
         public long SettlementId { get; set; }        
 

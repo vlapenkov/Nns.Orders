@@ -8,9 +8,7 @@ namespace Nns.Orders.WebApi.Validators
         public MachineApplicationRequestValidator()
         {
             RuleFor(p => p.StartDate)
-                .NotEmpty()
-                .Must(p => p.Date == p)
-                .Must(p => p.Kind == DateTimeKind.Utc);
+                .NotEmpty();
 
             RuleFor(p => p.SettlementId)
                .NotEmpty();

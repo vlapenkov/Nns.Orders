@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Nns.Orders.Common.Exceptions;
+using Nns.Orders.Common.PagedList;
 using Nns.Orders.Domain.Documents;
 using Nns.Orders.Interfaces;
 using Nns.Orders.Interfaces.Logic;
@@ -19,7 +20,7 @@ namespace Nns.Orders.Logic
         public async Task<long> Add(CreateOrderPlanRequest request)
         {
 
-            if (await _dbContext.OrderPlan.AnyAsync(p => p.SettlementId == request.SettlementId && p.StartDate > request.StartDate))
+            if (await _dbContext.OrderPlan.AnyAsync(p => p.SettlementId == request.SettlementId && p.StartDate > request.StartDate.ToDateTime(TimeOnly.MinValue)))
             {
                 throw new AppException("Нельзя вводить данные задним числом. Уже есть более поздние записи.");
             }
@@ -27,8 +28,10 @@ namespace Nns.Orders.Logic
             // проверка что нет таких на StartDate
             var workingPlans = await _dbContext.OrderPlan.Where(p =>
                p.SettlementId == request.SettlementId
-               && p.StartDate == request.StartDate)
-                .Select(p => new { p.WorkKindId, p.OrderNumber }).AsNoTracking().ToListAsync();
+               && p.StartDate == request.StartDate.ToDateTime(TimeOnly.MinValue))
+                .Select(p => new { p.WorkKindId, p.OrderNumber })
+                .AsNoTracking()
+                .ToListAsync();
 
             if (workingPlans.Any(self => self.WorkKindId == request.WorkKindId))
             {
@@ -67,7 +70,7 @@ namespace Nns.Orders.Logic
 
             OrderPlan plan = new()
             {
-                StartDate = request.StartDate,
+                StartDate = request.StartDate.ToDateTime(TimeOnly.MinValue),
                 SettlementId = request.SettlementId,
                 WorkKindId = request.WorkKindId,
                 MachineKindId = request.MachineKindId,
@@ -82,11 +85,19 @@ namespace Nns.Orders.Logic
 
         }
 
+        /// <summary>
+        /// Может ли быть применен для выработки вид машины и вид работы
+        /// </summary>        
         public async Task<bool> CanMachineApply(long settlementId, long workKindId, long machineKindId)
         {
 
-            MachineApplication? lastRecord = await _dbContext.MachineApplications.Where(p => p.SettlementId == settlementId && p.WorkKindId == workKindId && p.MachineKindId == machineKindId)
-                  .OrderByDescending(p => p.StartDate).FirstOrDefaultAsync();
+            MachineApplication? lastRecord = await _dbContext.MachineApplications.Where(
+                p => p.SettlementId == settlementId 
+                && p.WorkKindId == workKindId 
+                && p.MachineKindId == machineKindId)
+                .OrderByDescending(p => p.StartDate)
+                .AsNoTracking()
+                .FirstOrDefaultAsync();
 
             return lastRecord != null && lastRecord.IsActive;
 
@@ -157,7 +168,7 @@ namespace Nns.Orders.Logic
         {
             if (!filter.PageSize.HasValue || filter.PageSize == default)
             {
-                filter.PageSize = 50;
+                filter.PageSize = PagedList<int>.MaxNumber;
             }
             filter.PageNumber = Math.Max(1, filter.PageNumber.GetValueOrDefault());
 

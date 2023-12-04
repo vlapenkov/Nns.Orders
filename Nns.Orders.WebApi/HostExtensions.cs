@@ -7,9 +7,9 @@ using System.Reflection;
 using System.Text.Json.Serialization;
 using System.Text.Json;
 using System.ComponentModel;
+using Nns.Orders.WebApi.Converters;
 
-
-    public static class HostExtensions
+public static class HostExtensions
     {
         public static void RunApi(this WebApplicationBuilder builder,
          Action<IHostBuilder, IConfiguration, IServiceCollection> configureBuilder,
@@ -24,6 +24,7 @@ using System.ComponentModel;
             {
 
                 options.JsonSerializerOptions.DefaultIgnoreCondition = JsonIgnoreCondition.WhenWritingNull;
+                options.JsonSerializerOptions.Converters.Add(new DateOnlyJsonConverter());
             });
 
             // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

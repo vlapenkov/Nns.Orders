@@ -60,7 +60,16 @@ namespace Nns.Orders.Infrastructure
 
         public async Task<int> SaveChangesAsync()
         {
-           return  await base.SaveChangesAsync();
+            try
+            {                
+                return await base.SaveChangesAsync();
+            }
+            catch (DbUpdateException ex)
+            {
+                if (ex.InnerException.Message.Contains("FOREIGN KEY", StringComparison.InvariantCultureIgnoreCase))
+                    throw new ApplicationException("Указанный ключ отсутствует в базе");
+                else throw;
+            }
         }
 
         

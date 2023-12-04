@@ -9,7 +9,7 @@ namespace Nns.Orders.Interfaces.Models
 {
     public record CreateMachineApplicationRequest
     {
-        public DateTime StartDate { get; set; }
+        public DateOnly StartDate { get; set; }
         public long SettlementId { get; set; }        
 
         public long MachineKindId { get; set; }        

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Nns.Orders.Common.PagedList;
 using Nns.Orders.Interfaces.Logic;
 using Nns.Orders.Interfaces.Models;
 using Nns.Orders.Logic;

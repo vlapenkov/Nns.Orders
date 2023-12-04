@@ -4,10 +4,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Nns.Orders.Interfaces.Models
+namespace Nns.Orders.Common.PagedList
 {
     public class PagedList<T>
     {
+
+        public static readonly int MaxNumber = 50;
         /// <summary>
         /// Номер страницы
         /// </summary>
