@@ -3,7 +3,7 @@ using Nns.Orders.WebApi.Models;
 
 namespace Nns.Orders.WebApi.Validators
 {
-    public class MachineApplicationRequestValidator :  AbstractValidator<CreateEquipmentApplicationRequest>
+    public class MachineApplicationRequestValidator :  AbstractValidator<CreateEquipment2WorkRequest>
     {
         public MachineApplicationRequestValidator()
         {

@@ -1,12 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Nns.Orders.Common.PagedList;
 using Nns.Orders.Domain.Documents;
 using Nns.Orders.Interfaces.Logic;
 using Nns.Orders.WebApi.Models;
 using Nns.Orders.Logic;
 using Nns.Orders.WebApi.Models;
-
-// For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+using AutoMapper;
+using AutoMapper.QueryableExtensions;
+using X.PagedList;
 
 namespace Nns.Orders.WebApi.Controllers
 {
@@ -15,20 +15,32 @@ namespace Nns.Orders.WebApi.Controllers
     public class WorkOrderController : ControllerBase
     {
         private readonly IWorkOrderService _service;
+        private readonly IMapper _mapper;
 
-        public WorkOrderController(IWorkOrderService service)
+
+        public WorkOrderController(IWorkOrderService service, IMapper mapper)
         {
             _service = service;
+            _mapper = mapper;
         }
 
         /// <summary>
         /// Список планов (наряд-заданий)
         /// </summary>
         [HttpGet]
-        public async Task<PagedList<WorkOrderResponse>> Get([FromQuery]WorkOrderFilter filter)
+        public async Task<IActionResult> Get([FromQuery] WorkOrderFilter filter)
         {
-            //return await _service.Get(filter);
-            throw new NotImplementedException();    
+            var pagedList = await _service.GetAll(filter.ExcavationId, filter.WorkTypeId)
+                .ToPagedListAsync<WorkOrder>(filter.PageNumber ?? 1, filter.PageSize ?? 50);
+
+            var ordersDto = _mapper.Map<IList<WorkOrderShortResponse>>(pagedList);                       
+
+            return Ok(new
+            {
+                Total = pagedList.TotalItemCount,
+                Items = ordersDto
+            });
+
         }
 
         /// <summary>
@@ -39,16 +51,8 @@ namespace Nns.Orders.WebApi.Controllers
         {
             var result = await _service.Get(id);
 
-            return new WorkOrderResponse
-            {
-                Id = result.Id,
-                IsComplete = result.IsComplete,
-                EquipmentType = new EquipmentTypeDto { Id = result.EquipmentTypeId, Name = result.EquipmentType.Name },
-                WorkType = new WorkTypeDto { Id = result.WorkTypeId, Name = result.WorkType.Name },
-                Excavation = new ExcavationDto { Id = result.ExcavationId, Name = result.Excavation.Name },
-                OrderNumber = result.OrderNumber,
-                Value = result.Value
-            };
+            return _mapper.Map<WorkOrderResponse>(result);
+          
         }
 
         /// <summary>
@@ -57,16 +61,7 @@ namespace Nns.Orders.WebApi.Controllers
         [HttpPost]
         public async Task<IActionResult> Post([FromBody] CreateWorkOrderRequest request)
         {
-            WorkOrder model = new()
-            {
-                StartDate = request.StartDate.ToDateTime(TimeOnly.MinValue),
-                ExcavationId = request.ExcavationId,
-                WorkTypeId = request.WorkTypeId,
-                EquipmentTypeId = request.EquipmentTypeId,
-                Value = request.Value,
-                OrderNumber = request.OrderNumber,
-                IsComplete = request.IsComplete
-            };
+            var model =_mapper.Map<WorkOrder>(request);
 
             var result = await _service.Add(model);
 

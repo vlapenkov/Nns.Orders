@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Mvc;
 using Nns.Orders.Domain.Documents;
 using Nns.Orders.Interfaces.Logic;
 using Nns.Orders.WebApi.Models;
@@ -13,10 +14,12 @@ namespace Nns.Orders.WebApi.Controllers
     {
 
         private readonly IWorkCycleService _workOrderService;
+        private readonly IMapper _mapper;
 
-        public WorkCycleController(IWorkCycleService workOrderService)
+        public WorkCycleController(IWorkCycleService workOrderService, IMapper mapper)
         {
             _workOrderService = workOrderService;
+            _mapper = mapper;
         }
 
 
@@ -28,15 +31,7 @@ namespace Nns.Orders.WebApi.Controllers
         {
             var result = await _workOrderService.Get(id);
 
-            return new WorkCycleResponse
-            {
-                Id = result.Id,
-                
-                WorkKind = new WorkTypeDto { Id = result.WorkTypeId, Name = result.WorkType.Name },
-                IsActive = result.IsActive,
-                OrderNumber = result.OrderNumber,
-                StartDate = result.StartDate
-            };
+            return _mapper.Map < WorkCycleResponse>(result);
         }
 
         /// <summary>
@@ -46,13 +41,7 @@ namespace Nns.Orders.WebApi.Controllers
         public async Task<IActionResult> Post([FromBody] CreateWorkCycleRequest request)
         {
 
-            var model = new WorkCycle
-            {
-                StartDate = request.StartDate.ToDateTime(TimeOnly.MinValue),
-                WorkTypeId= request.WorkTypeId,                
-                IsActive = request.IsActive,
-                OrderNumber= request.OrderNumber
-            };
+            var model =_mapper.Map<WorkCycle>(request);
 
             var result = await _workOrderService.Add(model);
 

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Nns.Orders.WebApi.Models
 {
-    public record CreateEquipmentApplicationRequest
+    public record CreateEquipment2WorkRequest
     {
         public DateOnly StartDate { get; set; }
 

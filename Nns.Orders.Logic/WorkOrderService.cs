@@ -126,66 +126,28 @@ public class WorkOrderService : IWorkOrderService
         //        "Нельзя вводить данные задним числом. В применяемости уже есть более поздние записи.");
     }
 
-    
-
-    //public async Task<PagedList<WorkOrder>> Get()
-    //{
-    //    IQueryable<WorkOrder> query = _dbContext.WorkOrders.AsNoTracking();
-
-    //    //if (filter.ExcavationId != null)
-    //    //{
-    //    //    query = query.Where(x => x.ExcavationId== filter.ExcavationId);
-    //    //}
-
-    //    //if (filter.WorkTypeId != null)
-    //    //{
-    //    //    query = query.Where(x => x.WorkTypeId == filter.WorkTypeId);
-    //    //}
-
-    //    long count = await query.CountAsync();
-
-    //    query = query.AsNoTracking().OrderByDescending(x => x.Created);
-
-    //    //query = SetPagination(query!, filter);
-
-    //    //PagedList<WorkOrderResponse> result = new()
-    //    //{
-    //    //    Items = await query.Select(result => new WorkOrderResponse
-    //    //    {
-    //    //        Id = result.Id,
-    //    //        IsComplete = result.IsComplete,
-    //    //        EquipmentType = new EquipmentTypeDto { Id = result.EquipmentTypeId, Name = result.EquipmentType.Name },
-    //    //        WorkType = new WorkTypeDto { Id = result.WorkTypeId, Name = result.WorkType.Name },
-    //    //        Excavation = new ExcavationDto { Id = result.ExcavationId, Name = result.Excavation.Name },
-    //    //        OrderNumber = result.OrderNumber,
-    //    //        Value = result.Value
-    //    //    }).ToListAsync(),
-    //    //    PageNumber = filter.PageNumber!.Value,
-    //    //    PageSize = filter.PageSize,
-    //    //};
 
 
-    //    throw new NotImplementedException();
+    public  IQueryable<WorkOrder> GetAll(long? excavationId, long? workTypeId)
+    {
 
-    //}
+        var query = _dbContext.WorkOrders
+            .Include(self=>self.Excavation)                        
+            .AsNoTracking();
 
-    //private IQueryable<WorkOrder> SetPagination(IQueryable<WorkOrder> query, WorkOrderFilter filter)
-    //{
-    //    if (!filter.PageSize.HasValue || filter.PageSize == default)
-    //    {
-    //        filter.PageSize = PagedList<int>.MaxNumber;
-    //    }
-    //    filter.PageNumber = Math.Max(1, filter.PageNumber.GetValueOrDefault());
+        if (excavationId != null)
+        {
+            query = query.Where(x => x.ExcavationId == excavationId);
+        }
 
-    //    int? position = (filter.PageNumber - 1) * filter.PageSize;
+        if (workTypeId != null)
+        {
+            query = query.Where(x => x.WorkTypeId == workTypeId);
+        }
 
-    //    query = filter.PageSize.Value == int.MaxValue ?
-    //        query
-    //        .Skip(position ?? 0)
-    //        : query
-    //        .Skip(position ?? 0)
-    //        .Take(filter.PageSize.Value);
+        return query.OrderByDescending(self => self.Created);
+                 
+    }
 
-    //    return query;
-    //}
+
 }

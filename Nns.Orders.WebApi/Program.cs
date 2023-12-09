@@ -3,6 +3,7 @@ using Nns.Orders.Infrastructure;
 using Nns.Orders.Interfaces;
 using Nns.Orders.Interfaces.Logic;
 using Nns.Orders.Logic;
+using AutoMapper;
 
 
 WebApplication.CreateBuilder(args)
@@ -17,6 +18,11 @@ WebApplication.CreateBuilder(args)
         }
 
     );
+
+    
+
+    services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
 
     services.AddScoped<IWorkCycleState, WorkCycleState>();
     services.AddScoped<IEquipmentState, EquipmentState>();

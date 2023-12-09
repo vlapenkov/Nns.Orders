@@ -6,15 +6,12 @@ using System.Threading.Tasks;
 
 namespace Nns.Orders.WebApi.Models
 {
-    public record WorkOrderResponse
+    public record WorkOrderShortResponse
     {
+        
+        public DateTime StartDate { get; set; }
         public long Id { get; set; }
         public ExcavationDto Excavation { get; set; }
-
-        public EquipmentTypeDto EquipmentType { get; set; }
-
-        public WorkTypeDto WorkType { get; set; }
-
         public uint Value { get; set; }
 
         public uint OrderNumber { get; set; }

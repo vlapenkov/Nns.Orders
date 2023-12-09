@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Nns.Orders.WebApi.Models
 {
-    public record EquipmentApplicationResponse
+    public record Equipment2WorkResponse
     {
         public long Id { get; set; }
 

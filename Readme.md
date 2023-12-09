@@ -12,7 +12,5 @@
 
 </ul>
 <ul>TODO:
-<li>Automapper</li>
 <li>Error Middleware</li>
-<li>Unit tests</li>
 </ul>
