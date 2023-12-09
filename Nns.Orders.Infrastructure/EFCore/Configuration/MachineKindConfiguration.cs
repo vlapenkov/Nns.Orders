@@ -9,10 +9,10 @@ using System.Threading.Tasks;
 
 namespace Nns.Orders.Infrastructure.EFCore.Configuration
 {
-    public class MachineKindConfiguration : BaseEntityTypeConfiguration<MachineKind>
+    public class MachineKindConfiguration : BaseEntityTypeConfiguration<EquipmentType>
     {
 
-        public override void Configure(EntityTypeBuilder<MachineKind> entityTypeBuilder)
+        public override void Configure(EntityTypeBuilder<EquipmentType> entityTypeBuilder)
         {
             base.Configure(entityTypeBuilder);
 

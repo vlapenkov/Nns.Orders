@@ -1,22 +1,19 @@
 ﻿using FluentValidation;
-using Nns.Orders.Interfaces.Models;
+using Nns.Orders.WebApi.Models;
 
 namespace Nns.Orders.WebApi.Validators
 {
-    public class MachineApplicationRequestValidator :  AbstractValidator<CreateMachineApplicationRequest>
+    public class MachineApplicationRequestValidator :  AbstractValidator<CreateEquipmentApplicationRequest>
     {
         public MachineApplicationRequestValidator()
         {
             RuleFor(p => p.StartDate)
-                .NotEmpty();
+                .NotEmpty();            
 
-            RuleFor(p => p.SettlementId)
+            RuleFor(p => p.EquipmentTypeId)
                .NotEmpty();
 
-            RuleFor(p => p.MachineKindId)
-               .NotEmpty();
-
-            RuleFor(p => p.WorkKindId)
+            RuleFor(p => p.WorkTypeId)
                .NotEmpty();
         }
     }

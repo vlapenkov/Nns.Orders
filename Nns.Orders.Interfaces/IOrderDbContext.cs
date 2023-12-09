@@ -10,22 +10,19 @@ using System.Threading.Tasks;
 namespace Nns.Orders.Interfaces
 {
     public interface IOrderDbContext
-    {       
+    {
+        DbSet<EquipmentType> EquipmentTypes { get; }
 
-        public DbSet<MachineKind> MachineKinds { get; set; }
+        DbSet<Excavation> Excavations { get; }
 
-        public DbSet<Settlement> Settlements { get; set; }
+        DbSet<WorkType> WorkTypes { get; }
 
-        public DbSet<WorkKind> WorkKindS { get; set; }
+        DbSet<EquipmentApplication> EquipmentApplications { get;  }
 
-        public DbSet<MachineApplication> MachineApplications { get; set; }
+        DbSet<WorkCycle> WorkCycles { get; }
 
-        public DbSet<WorkOrder> WorkOrders { get; set; }
+        DbSet<WorkOrder> WorkOrders { get; }
 
-        public DbSet<OrderPlan> OrderPlan { get; set; }
-
-        Task<int> SaveChangesAsync();
-
-        
+        Task<int> SaveChangesAsync(CancellationToken cancellationToken = default);
     }
 }

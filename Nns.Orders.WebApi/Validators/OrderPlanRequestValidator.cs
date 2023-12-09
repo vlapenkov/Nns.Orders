@@ -1,29 +1,22 @@
 ﻿using FluentValidation;
-using Nns.Orders.Interfaces.Models;
+using Nns.Orders.WebApi.Models;
 
-namespace Nns.Orders.WebApi.Validators
+namespace Nns.Orders.WebApi.Validators;
+
+public class OrderPlanRequestValidator : AbstractValidator<CreateWorkOrderRequest>
 {
-    public class OrderPlanRequestValidator :   AbstractValidator<CreateOrderPlanRequest>
+    public OrderPlanRequestValidator()
     {
-        public OrderPlanRequestValidator()
-        {
-            RuleFor(p => p.StartDate)
-                .NotEmpty();
-                
+        RuleFor(p => p.StartDate)
+            .NotEmpty();
 
-            RuleFor(p => p.SettlementId)
-                   .NotEmpty();
+        RuleFor(p => p.WorkTypeId)
+            .NotEmpty();
 
-            RuleFor(p => p.MachineKindId)
-                   .NotEmpty();
+        RuleFor(p => p.EquipmentTypeId)
+            .NotEmpty();
 
-            RuleFor(p => p.WorkKindId)
-                   .NotEmpty();
-
-            RuleFor(p => p.Value)
-                .Must(p => p <= 100 && p >= 0);
-                
-
-        }
+        RuleFor(p => p.Value)
+            .Must(p => p <= 100);
     }
 }

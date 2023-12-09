@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Nns.Orders.Common.Exceptions
 {
-    public class NotFoundException : AppException
+    public class EntityNotFoundException : AppException
     {
-        public NotFoundException(string message):base(message)
+        public EntityNotFoundException(string message):base(message)
         {
 
         }

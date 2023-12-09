@@ -9,7 +9,7 @@ WebApplication.CreateBuilder(args)
     .RunApi((host, configuration, services) =>
 {
 
-    services.AddDbContext<IOrderDbContext, OrderDbContext>(
+    services.AddDbContext<IOrderDbContext,OrderDbContext>(
         options =>
         {
             options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"));
@@ -18,9 +18,14 @@ WebApplication.CreateBuilder(args)
 
     );
 
-    services.AddScoped<IMachineApplicationService, MachineApplicationService>();
+    services.AddScoped<IWorkCycleState, WorkCycleState>();
+    services.AddScoped<IEquipmentState, EquipmentState>();
+
+    services.AddScoped<IEquipmentApplicationService, EquipmentApplicationService>();
+    services.AddScoped<IWorkCycleService, WorkCycleService>();
     services.AddScoped<IWorkOrderService, WorkOrderService>();
-    services.AddScoped<IOrderPlanService, OrderPlanService>();
+
+    
 
 });
 

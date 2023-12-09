@@ -1,11 +1,13 @@
-﻿using Nns.Orders.Interfaces.Models;
+﻿using Nns.Orders.Common.PagedList;
+using Nns.Orders.Domain.Documents;
 
-namespace Nns.Orders.Logic
+
+namespace Nns.Orders.Interfaces.Logic;
+
+public interface IWorkOrderService
 {
-    public interface IWorkOrderService
-    {
-         Task<long> Add(CreateWorkOrderRequest request);
+    Task<long> Add(WorkOrder request);
+    Task<WorkOrder> Get(long Id);
 
-        Task<WorkOrderResponse> Get(long id);
-    }
+    //Task<PagedList<WorkOrder>> Get(WorkOrderFilter filter);
 }

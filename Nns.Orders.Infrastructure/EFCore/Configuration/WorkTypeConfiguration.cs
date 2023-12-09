@@ -9,15 +9,15 @@ using System.Threading.Tasks;
 
 namespace Nns.Orders.Infrastructure.EFCore.Configuration
 {
-    public class ExcavationConfiguration : BaseEntityTypeConfiguration<Excavation>
+    public class WorkTypeConfiguration : BaseEntityTypeConfiguration<WorkType>
     {
 
-        public override void Configure(EntityTypeBuilder<Excavation> entityTypeBuilder)
+        public override void Configure(EntityTypeBuilder<WorkType> entityTypeBuilder)
         {
             base.Configure(entityTypeBuilder);
 
             entityTypeBuilder.Property(x => x.Name).HasMaxLength(255);
-
+         
         }
 
     }
